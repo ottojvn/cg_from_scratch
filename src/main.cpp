@@ -1,9 +1,8 @@
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <cstdio>
+#include <SDL3/SDL.h>
+#include <iostream>
 
 int main(void) {
-    printf("Sucesso!\n");
+    std::cout << "Sucesso\n";
 
     return 0;
 }

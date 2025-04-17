@@ -1,26 +1,23 @@
-cmake_minimum_required(VERSION 3.10)
-project(cg_projeto0 VERSION 1.0)
+cmake_minimum_required(VERSION 4.0.1)
+project(cg_from_scratch)
 
-# Define o padrão C++ e exige a versão escolhida
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Diretório de includes do projeto (local onde estão os headers, como glad.h)
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
-# Encontra as dependências instaladas via package manager
-find_package(glfw3 3.3 REQUIRED)
-set(OpenGL_GL_PREFERENCE GLVND)
-find_package(OpenGL REQUIRED)
-# O GLM é uma biblioteca header-only; se estiver instalada no sistema, você pode
-# incluir o diretório de includes ou adicioná-la manualmente se preferir.
+include(FetchContent)
 
-# Lista de arquivos fonte do projeto (incluindo o glad.c, que é necessário para
-# o GLAD funcionar)
-set(SOURCES src/main.cpp src/glad.c)
+FetchContent_Declare(
+  sdl3
+  GIT_REPOSITORY https://github.com/libsdl-org/SDL.git
+  GIT_TAG release-3.2.10)
+FetchContent_MakeAvailable(sdl3)
 
-# Cria o executável a partir dos arquivos fonte
+set(SOURCES src/main.cpp)
+
+# Create your game executable target as usual
 add_executable(${PROJECT_NAME} ${SOURCES})
 
-# Linka as bibliotecas necessárias (GLFW e OpenGL)
-target_link_libraries(${PROJECT_NAME} glfw OpenGL::GL)
+# Link to the actual SDL3 library.
+target_link_libraries(${PROJECT_NAME} PRIVATE SDL3::SDL3)
